@@ -3,6 +3,7 @@ from datetime import datetime
 import itertools
 import numpy as np
 from sklearn import tree
+from sklearn.externals import joblib
 
 def loadData(data='nflplaybyplay2015.csv', low_memory = False):
     return pd.read_csv(data)
@@ -37,9 +38,13 @@ def makeTree(train):
     my_tree = tree.DecisionTreeClassifier()
     my_tree = my_tree.fit(features, target)
 
+    joblib.dump(my_tree, 'my_tree.pkl')
+
     return my_tree
 
-def testTree(test, tree):
+def testTree(test, tree=None):
+    if tree is None:
+        tree = joblib.load('my_tree.pkl')
     target = test['passed'].values
     features = test[['down', 'ydstogo', 'ScoreDiff']].values
     return tree.score(features, target)
