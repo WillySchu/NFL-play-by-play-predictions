@@ -1,27 +1,37 @@
 <div class="container">
-  <div class="row">
-    <select class="form-control" name="down">
-      <option value='1'>First</option>
-      <option value='2'>Second</option>
-      <option value='3'>Third</option>
-      <option value='4'>Fourth</option>
-    </select>
-  </div>
-  <div class="row">
-    <select class="form-control" name="ydstogo">
-      <option value='1'>1</option>
-      <option value='2'>2</option>
-      <option value='3'>3</option>
-      <option value='4'>4</option>
-      <option value='5'>5</option>
-      <option value='6'>6</option>
-      <option value='7'>7</option>
-      <option value='8'>8</option>
-      <option value='9'>9</option>
-      <option value='10'>10+</option>
-    </select>
-  </div>
-  <div class="row">
-    <input class='form-control' type="number" name="ScoreDiff" value="">
+  <form ng-submit='main.submit()' method="post" class='form-horizontal'>
+    <div class="col-md-12">
+      <div class="row">
+        <label for="down">Down</label>
+        <select class="form-control" name="down" id='down'>
+          <option value='1'>First</option>
+          <option value='2'>Second</option>
+          <option value='3'>Third</option>
+          <option value='4'>Fourth</option>
+        </select>
+      </div>
+      <div class="row">
+        <label for="ydstogo">Distance</label>
+        <select class="form-control" name="ydstogo" id='ydstogo'>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
+          <option value='6'>6</option>
+          <option value='7'>7</option>
+          <option value='8'>8</option>
+          <option value='9'>9</option>
+          <option value='10'>10+</option>
+        </select>
+      </div>
+      <div class="row">
+        <label for="ScoreDiff">Score Differential</label>
+        <input class='form-control' type="number" name="ScoreDiff" value="" id='ScoreDiff'>
+      </div>
+      <div class="row">
+        <button type="submit" name="button" class='btn btn-default'>Predict Play</button>
+      </div>
+    </form>
   </div>
 </div>

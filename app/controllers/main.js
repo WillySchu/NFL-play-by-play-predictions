@@ -11,4 +11,8 @@ function Main(Todos) {
       console.log(data);
     })
   }
+
+  vm.submit = function() {
+    console.log('submit');
+  }
 }
