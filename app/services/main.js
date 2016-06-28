@@ -3,7 +3,6 @@ angular.module('app')
     const baseUrl = 'http://127.0.0.1:5000/'
     return {
       todos: function() {
-        console.log(1);
         return $http.get(baseUrl).then(data => {
           return data;
         })
