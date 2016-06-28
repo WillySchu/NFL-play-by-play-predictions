@@ -6,6 +6,11 @@ angular.module('app')
       .state('main', {
         url: '/',
         views: {
+          'nav': {
+            templateUrl: 'partials/nav.html',
+            controller: 'Nav',
+            controllerAs: 'nav'
+          },
           'content': {
             templateUrl: 'partials/main.html',
             controller: 'Main',
