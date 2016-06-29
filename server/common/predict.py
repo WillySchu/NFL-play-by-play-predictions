@@ -10,6 +10,8 @@ def loadData(data='nflplaybyplay2015.csv', low_memory = False):
 
 def formatData(data):
 
+    data = data[data['PlayType'] != 'Timeout']
+
     def week(date):
         startDate = '2015-09-10'
         return (datetime.strptime(date,'%Y-%m-%d')
@@ -25,15 +27,16 @@ def formatData(data):
 
     data['down'][np.isnan(data['down']) == True] = 0
     data['ScoreDiff'][np.isnan(data['ScoreDiff']) == True] = 0
+    data['TimeSecs'][np.isnan(data['TimeSecs']) == True] = 0
 
-    train = data[data['week'] != 8]
-    test = data[data['week'] == 8]
+    train = data[data['week'] != 12]
+    test = data[data['week'] == 11]
 
     return (train, test)
 
 def makeTree(train):
     target = train['passed'].values
-    features = train[['down', 'ydstogo', 'ScoreDiff']].values
+    features = train[['down', 'ydstogo', 'ScoreDiff', 'TimeSecs']].values
 
     my_tree = tree.DecisionTreeClassifier()
     my_tree = my_tree.fit(features, target)
@@ -46,10 +49,16 @@ def testTree(test, tree=None):
     if tree is None:
         tree = joblib.load('my_tree.pkl')
     target = test['passed'].values
-    features = test[['down', 'ydstogo', 'ScoreDiff']].values
+    features = test[['down', 'ydstogo', 'ScoreDiff', 'TimeSecs']].values
     return tree.score(features, target)
 
 def predict(features, tree=None):
     if tree is None:
         tree = joblib.load('common/my_tree.pkl')
     return tree.predict(features)
+
+def go():
+    data = loadData()
+    train, test = formatData(data)
+    my_tree = makeTree(train)
+    return testTree(test, my_tree)
