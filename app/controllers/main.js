@@ -1,18 +1,12 @@
 angular.module('app')
   .controller('Main', Main)
 
-Main.$inject = ['Todos']
+Main.$inject = ['Prediction']
 
-function Main(Todos) {
+function Main(Prediction) {
   const vm = this;
 
-  vm.todos = function() {
-    Todos.todos().then(data => {
-      console.log(data);
-    })
-  }
-
-  vm.submit = function() {
-    console.log('submit');
+  vm.submit = function(down, ydstogo, ScoreDiff) {
+    Prediction.submit(down, ydstogo, ScoreDiff)
   }
 }

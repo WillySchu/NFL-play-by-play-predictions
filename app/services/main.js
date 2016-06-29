@@ -1,15 +1,12 @@
 angular.module('app')
-  .factory('Todos', function($http) {
+  .factory('Prediction', function($http) {
     const baseUrl = 'http://127.0.0.1:5000/'
     return {
-      todos: function() {
-        return $http.get(baseUrl).then(data => {
-          return data;
-        })
-      },
-      todo: function(id) {
-        return $http.get(baseUrl + id).then(data => {
-          return data;
+      submit: function(down, ydstogo, ScoreDiff) {
+        data = JSON.stringify({down, ydstogo, ScoreDiff});
+        console.log(data);
+        $http.post(baseUrl, {down, ydstogo, ScoreDiff}).then(data => {
+          console.log(data);
         })
       }
     }
