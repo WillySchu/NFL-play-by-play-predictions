@@ -78,7 +78,7 @@ def makeTree(train):
     my_tree = tree.DecisionTreeClassifier()
     my_tree = my_tree.fit(features, target)
 
-    joblib.dump(my_tree, 'my_tree.pkl')
+    joblib.dump(my_tree, 'data/my_tree.pkl')
 
     return my_tree
 
@@ -91,7 +91,7 @@ def testTree(test, tree=None):
 
 def predictTree(features, tree=None):
     if tree is None:
-        tree = joblib.load('common/my_tree.pkl')
+        tree = joblib.load('common/data/my_tree.pkl')
     return tree.predict(features)
 
 def goTree():
@@ -107,20 +107,20 @@ def makeForest(train):
     my_forest = RandomForestClassifier(max_depth = 10, min_samples_split=2, n_estimators = 100, random_state = 1)
     my_forest = my_forest.fit(features, target)
 
-    joblib.dump(my_forest, 'my_forest.pkl')
+    joblib.dump(my_forest, 'data/my_forest.pkl')
 
     return my_forest
 
 def testForest(test, forest=None):
     if forest is None:
-        forest = joblib.load('my_forest.pkl')
+        forest = joblib.load('data/my_forest.pkl')
     target = test['passed'].values
     features = test[['down', 'ydstogo', 'ScoreDiff', 'TimeSecs']].values
     return forest.score(features, target)
 
 def predictForest(features, forest=None):
     if forest is None:
-        forest = joblib.load('my_forest.pkl')
+        forest = joblib.load('common/data/my_forest.pkl')
     return forest.predict(features)
 
 def goForest():

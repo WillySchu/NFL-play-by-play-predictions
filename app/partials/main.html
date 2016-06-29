@@ -1,5 +1,5 @@
 <div class="container">
-  <form ng-submit='main.submit(main.down, main.ydstogo, main.ScoreDiff)' method="post" class='form-horizontal'>
+  <form ng-submit='main.submit(main.down, main.ydstogo, main.ScoreDiff, main.TimeSecs)' method="post" class='form-horizontal'>
     <div class="col-md-12">
       <div class="row">
         <label for="down">Down</label>
@@ -28,6 +28,10 @@
       <div class="row">
         <label for="ScoreDiff">Score Differential</label>
         <input ng-model='main.ScoreDiff' class='form-control' type="number" name="ScoreDiff" value="" id='ScoreDiff'>
+      </div>
+      <div class="row">
+        <label for="TimeSecs">Time left in seconds</label>
+        <input ng-model='main.TimeSecs' class='form-control' type="number" name="TimeSecs" value="" id='TimeSecs'>
       </div>
       <div class="row">
         <button type="submit" name="button" class='btn btn-default'>Predict Play</button>

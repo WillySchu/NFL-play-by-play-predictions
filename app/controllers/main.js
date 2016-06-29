@@ -6,8 +6,8 @@ Main.$inject = ['Prediction', '$state']
 function Main(Prediction, $state) {
   const vm = this;
 
-  vm.submit = function(down, ydstogo, ScoreDiff) {
-    Prediction.submit(down, ydstogo, ScoreDiff).then(function(result) {
+  vm.submit = function(down, ydstogo, ScoreDiff, TimeSecs) {
+    Prediction.submit(down, ydstogo, ScoreDiff, TimeSecs).then(function(result) {
       if (result === 1) {
         vm.result = 'Pass';
       } else if (result === 2) {
