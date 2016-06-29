@@ -51,5 +51,5 @@ def testTree(test, tree=None):
 
 def predict(features, tree=None):
     if tree is None:
-        tree = joblib.load('my_tree.pkl')
+        tree = joblib.load('common/my_tree.pkl')
     return tree.predict(features)
