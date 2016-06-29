@@ -10,5 +10,9 @@ parser.add_argument('ScoreDiff')
 class Predict(Resource):
     def post(self):
         args = parser.parse_args()
+        print(args)
         features = [[args['down'], args['ydstogo'], args['ScoreDiff']]]
         return predict(features)[0]
+
+    def get(self):
+        return 'Hello World'
