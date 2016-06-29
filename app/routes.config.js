@@ -18,4 +18,12 @@ angular.module('app')
           }
         }
       })
+      .state('main.result', {
+        url: 'result',
+        views: {
+          'result@main': {
+            templateUrl: 'partials/result.html'
+          }
+        }
+      })
   })
