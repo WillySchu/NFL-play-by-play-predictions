@@ -48,3 +48,8 @@ def testTree(test, tree=None):
     target = test['passed'].values
     features = test[['down', 'ydstogo', 'ScoreDiff']].values
     return tree.score(features, target)
+
+def predict(features, tree=None):
+    if tree is None:
+        tree = joblib.load('my_tree.pkl')
+    return tree.predict(features)
