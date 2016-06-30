@@ -92,7 +92,7 @@ def testTree(test, tree=None):
 def predictTree(features, tree=None):
     if tree is None:
         tree = joblib.load('common/data/my_tree.pkl')
-    return tree.predict(features)
+    return tree.predict_proba(features)
 
 def goTree():
     data = loadData()
@@ -121,7 +121,7 @@ def testForest(test, forest=None):
 def predictForest(features, forest=None):
     if forest is None:
         forest = joblib.load('common/data/my_forest.pkl')
-    return forest.predict(features)
+    return forest.predict_proba(features)
 
 def goForest():
     data = loadData()
