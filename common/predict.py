@@ -48,6 +48,8 @@ def formatData(data):
 
     data = data[data['PlayType'] != 'Timeout']
     data = data[data['PlayType'] != 'Two Minute Warning']
+    data = data[data['PlayType'] != 'Quarter End']
+    data = data[data['PlayType'] != 'End of Game']
 
     def week(date):
         startDate = '2015-09-10'
@@ -73,7 +75,7 @@ def formatData(data):
 
 def makeTree(train):
     target = train['passed'].values
-    features = train[['down', 'ydstogo', 'ScoreDiff', 'TimeSecs']].values
+    features = train[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
 
     my_tree = tree.DecisionTreeClassifier()
     my_tree = my_tree.fit(features, target)
@@ -86,7 +88,7 @@ def testTree(test, tree=None):
     if tree is None:
         tree = joblib.load('my_tree.pkl')
     target = test['passed'].values
-    features = test[['down', 'ydstogo', 'ScoreDiff', 'TimeSecs']].values
+    features = test[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
     return tree.score(features, target)
 
 def predictTree(features, tree=None):
@@ -102,7 +104,7 @@ def goTree():
 
 def makeForest(train):
     target = train['passed'].values
-    features = train[['down', 'ydstogo', 'ScoreDiff', 'TimeSecs']].values
+    features = train[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
 
     my_forest = RandomForestClassifier(max_depth = 10, min_samples_split=2, n_estimators = 100, random_state = 1)
     my_forest = my_forest.fit(features, target)
@@ -115,7 +117,7 @@ def testForest(test, forest=None):
     if forest is None:
         forest = joblib.load('data/my_forest.pkl')
     target = test['passed'].values
-    features = test[['down', 'ydstogo', 'ScoreDiff', 'TimeSecs']].values
+    features = test[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
     return forest.score(features, target)
 
 def predictForest(features, forest=None):
