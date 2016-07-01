@@ -6,6 +6,8 @@ from sklearn import tree
 from sklearn.externals import joblib
 from sklearn.ensemble import RandomForestClassifier
 
+teamLabels = None
+
 def loadData(data='nflplaybyplay2015.csv', low_memory = False):
     return pd.read_csv(data)
 
@@ -53,6 +55,10 @@ def formatData(data):
     data = data[data['PlayType'] != 'No Play']
     data = data[data['PlayType'] != 'Kickoff']
 
+    labels, levels = pd.factorize(data['posteam'])
+    teamLabels = levels
+    data['posteamint'] = labels
+
     def week(date):
         startDate = '2015-09-10'
         return (datetime.strptime(date,'%Y-%m-%d')
@@ -80,7 +86,7 @@ def formatData(data):
 
 def makeTree(train):
     target = train['passed'].values
-    features = train[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
+    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
 
     my_tree = tree.DecisionTreeClassifier()
     my_tree = my_tree.fit(features, target)
@@ -93,7 +99,7 @@ def testTree(test, tree=None):
     if tree is None:
         tree = joblib.load('my_tree.pkl')
     target = test['passed'].values
-    features = test[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
+    features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
     return tree.score(features, target)
 
 def predictTree(features, tree=None):
@@ -109,7 +115,7 @@ def goTree():
 
 def makeForest(train):
     target = train['passed'].values
-    features = train[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
+    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
 
     my_forest = RandomForestClassifier(max_depth = 10, min_samples_split=2, n_estimators = 100, random_state = 1)
     my_forest = my_forest.fit(features, target)
@@ -122,7 +128,7 @@ def testForest(test, forest=None):
     if forest is None:
         forest = joblib.load('data/my_forest.pkl')
     target = test['passed'].values
-    features = test[['down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
+    features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
     return forest.score(features, target)
 
 def predictForest(features, forest=None):
