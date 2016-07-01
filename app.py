@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 
 from resources.todo import Todo
 from resources.predict import Predict
+from resources.auth import Register
 
 import os
 
@@ -23,6 +24,8 @@ api = Api(app)
 
 api.add_resource(Todo, '/<todo_id>')
 api.add_resource(Predict, '/')
+api.add_resource(Register, '/register')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
