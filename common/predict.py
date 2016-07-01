@@ -50,6 +50,8 @@ def formatData(data):
     data = data[data['PlayType'] != 'Two Minute Warning']
     data = data[data['PlayType'] != 'Quarter End']
     data = data[data['PlayType'] != 'End of Game']
+    data = data[data['PlayType'] != 'No Play']
+    data = data[data['PlayType'] != 'Kickoff']
 
     def week(date):
         startDate = '2015-09-10'
@@ -60,9 +62,12 @@ def formatData(data):
     data['week'] = [week(t) for t in data['Date']]
 
     data['passed'] = 0
-    data['passed'][data['PlayType'] == 'Pass'] = 1
-    data['passed'][data['PlayType'] == 'Sack'] = 1
-    data['passed'][data['PlayType'] == 'Run'] = 2
+    data['passed'][data['PlayType'] == 'Pass'] = 0
+    data['passed'][data['PlayType'] == 'Sack'] = 0
+    data['passed'][data['PlayType'] == 'Run'] = 1
+    data['passed'][data['PlayType'] == 'Punt'] = 2
+    data['passed'][data['PlayType'] == 'Field Goal'] = 3
+
 
     data['down'][np.isnan(data['down']) == True] = 0
     data['ScoreDiff'][np.isnan(data['ScoreDiff']) == True] = 0
