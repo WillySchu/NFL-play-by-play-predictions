@@ -13,41 +13,6 @@ def loadData(data='nflplaybyplay2015.csv', low_memory = False):
 
 def formatData(data):
 
-    teams = {
-        'ARI': 0,
-        'ATL': 1,
-        'BAL': 2,
-        'BUF': 3,
-        'CAR': 4,
-        'CHI': 5,
-        'CIN': 6,
-        'CLE': 7,
-        'DAL': 8,
-        'DEN': 9,
-        'DET': 10,
-        'GB': 11,
-        'HOU': 12,
-        'IND': 13,
-        'JAX': 14,
-        'KC': 15,
-        'MIA': 16,
-        'MIN': 17,
-        'NE': 18,
-        'NO': 19,
-        'NYG': 20,
-        'NYJ': 21,
-        'OAK': 22,
-        'PHI': 23,
-        'PIT': 24,
-        'SD': 25,
-        'SEA': 26,
-        'SF': 27,
-        'STL': 28,
-        'TB': 29,
-        'TEN': 30,
-        'WAS': 31
-    }
-
     data = data[data['PlayType'] != 'Timeout']
     data = data[data['PlayType'] != 'Two Minute Warning']
     data = data[data['PlayType'] != 'Quarter End']
@@ -117,7 +82,7 @@ def makeForest(train):
     target = train['passed'].values
     features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
 
-    my_forest = RandomForestClassifier(max_depth = 10, min_samples_split=2, n_estimators = 100, random_state = 1)
+    my_forest = RandomForestClassifier(max_depth = 20, min_samples_split=2, n_estimators = 500, random_state = 1)
     my_forest = my_forest.fit(features, target)
 
     joblib.dump(my_forest, 'data/my_forest.pkl')
