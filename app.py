@@ -6,7 +6,6 @@ from flask_bcrypt import Bcrypt
 
 from resources.todo import Todo
 from resources.predict import Predict
-from resources.auth import Register
 
 import os
 
@@ -17,7 +16,8 @@ db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
-from models import User
+from resources.auth import Register
+# from models import User
 
 CORS(app)
 api = Api(app)
