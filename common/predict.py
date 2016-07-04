@@ -19,6 +19,8 @@ def formatData(data):
     data = data[data['PlayType'] != 'End of Game']
     data = data[data['PlayType'] != 'No Play']
     data = data[data['PlayType'] != 'Kickoff']
+    data = data[data['PlayType'] != 'Extra Point']
+    data = data[data['PlayType'] != 'Onside Kick']
 
     labels, levels = pd.factorize(data['posteam'])
     teamLabels = levels
@@ -54,6 +56,7 @@ def formatData(data):
 
     data['passed'][data['PlayType'] == 'Punt'] = 20
     data['passed'][data['PlayType'] == 'Field Goal'] = 30
+    data['passed'][data['PlayType'] == 'QB Kneel'] = 40
 
 
     data['down'][np.isnan(data['down']) == True] = 0
