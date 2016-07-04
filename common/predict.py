@@ -82,7 +82,7 @@ def makeForest(train):
     target = train['passed'].values
     features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
 
-    my_forest = RandomForestClassifier(max_depth = 20, min_samples_split=2, n_estimators = 500, random_state = 1)
+    my_forest = RandomForestClassifier(max_depth = 20, min_samples_split=2, n_estimators = 100, random_state = 1)
     my_forest = my_forest.fit(features, target)
 
     joblib.dump(my_forest, 'data/my_forest.pkl')
