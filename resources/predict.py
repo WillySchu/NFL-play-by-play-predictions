@@ -1,7 +1,7 @@
 from flask_restful import reqparse, Resource
 
-from common.predict import predictTree
-from common.predict import predictForest
+from common.predict import predictSimpleForest
+from common.predict import predictComplexForest
 
 import json
 
@@ -17,7 +17,7 @@ class Predict(Resource):
     def post(self):
         args = parser.parse_args()
         features = [[args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs']]]
-        prediction = predictForest(features)[0]
+        prediction = predictComplexForest(features)[0]
         return json.dumps(prediction.tolist())
 
     def get(self):
