@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
-from resources.auth import Register
+# from resources.auth import Register
 # from models import User
 
 CORS(app)
