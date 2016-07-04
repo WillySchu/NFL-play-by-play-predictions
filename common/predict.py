@@ -19,6 +19,8 @@ def formatDataSimple(data):
     data = data[data['PlayType'] != 'End of Game']
     data = data[data['PlayType'] != 'No Play']
     data = data[data['PlayType'] != 'Kickoff']
+    data = data[data['PlayType'] != 'Extra Point']
+    data = data[data['PlayType'] != 'Onside Kick']
 
     labels, levels = pd.factorize(data['posteam'])
     teamLabels = levels
