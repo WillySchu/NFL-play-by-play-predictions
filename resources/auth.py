@@ -35,3 +35,9 @@ class Login(Resource):
         else:
             status = False
         return jsonify({'result': status})
+
+
+class Logout(Resource):
+    def post(self):
+        session.pop('logged_in', None)
+        return jsonify({'result': 'success'})
