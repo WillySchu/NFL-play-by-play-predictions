@@ -33,11 +33,27 @@ def formatData(data):
     data['week'] = [week(t) for t in data['Date']]
 
     data['passed'] = 0
-    data['passed'][data['PlayType'] == 'Pass'] = 0
-    data['passed'][data['PlayType'] == 'Sack'] = 0
-    data['passed'][data['PlayType'] == 'Run'] = 1
-    data['passed'][data['PlayType'] == 'Punt'] = 2
-    data['passed'][data['PlayType'] == 'Field Goal'] = 3
+    data['passed'][(data['PlayType'] == 'Pass') & (data['PassLength'] == 'Short') & (data['PassLocation'] == 'right')] = 1
+    data['passed'][(data['PlayType'] == 'Pass') & (data['PassLength'] == 'Short') & (data['PassLocation'] == 'middle')] = 2
+    data['passed'][(data['PlayType'] == 'Pass') & (data['PassLength'] == 'Short') & (data['PassLocation'] == 'left')] = 3
+    data['passed'][(data['PlayType'] == 'Pass') & (data['PassLength'] == 'Deep') & (data['PassLocation'] == 'right')] = 4
+    data['passed'][(data['PlayType'] == 'Pass') & (data['PassLength'] == 'Deep') & (data['PassLocation'] == 'middle')] = 5
+    data['passed'][(data['PlayType'] == 'Pass') & (data['PassLength'] == 'Deep') & (data['PassLocation'] == 'left')] = 6
+
+    data['passed'][data['PlayType'] == 'Sack'] = 7
+
+
+    data['passed'][data['PlayType'] == 'Run'] = 10
+    data['passed'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'right') & (data['RunGap'] == 'end')] = 11
+    data['passed'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'right') & (data['RunGap'] == 'tackle')] = 12
+    data['passed'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'right') & (data['RunGap'] == 'guard')] = 13
+    data['passed'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'middle')] = 14
+    data['passed'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'left') & (data['RunGap'] == 'guard')] = 15
+    data['passed'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'left') & (data['RunGap'] == 'tackle')] = 16
+    data['passed'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'left') & (data['RunGap'] == 'end')] = 17
+
+    data['passed'][data['PlayType'] == 'Punt'] = 20
+    data['passed'][data['PlayType'] == 'Field Goal'] = 30
 
 
     data['down'][np.isnan(data['down']) == True] = 0
