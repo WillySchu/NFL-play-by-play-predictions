@@ -24,7 +24,7 @@ api = Api(app)
 
 api.add_resource(Todo, '/<todo_id>')
 api.add_resource(Predict, '/')
-api.add_resource(Register, '/register')
+# api.add_resource(Register, '/register')
 
 
 if __name__ == '__main__':
