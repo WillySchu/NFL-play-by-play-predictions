@@ -16,15 +16,16 @@ db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
-# from resources.auth import Register
-# from models import User
+from resources.auth import Register
+from resources.auth import Login
 
 CORS(app)
 api = Api(app)
 
 api.add_resource(Todo, '/<todo_id>')
 api.add_resource(Predict, '/')
-# api.add_resource(Register, '/register')
+api.add_resource(Register, '/register')
+api.add_resource(Login, '/login')
 
 
 if __name__ == '__main__':
