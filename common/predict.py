@@ -98,6 +98,11 @@ def formatDataComplex(data):
     data['passed'][data['PlayType'] == 'Field Goal'] = 30
     data['passed'][data['PlayType'] == 'QB Kneel'] = 40
 
+    data['success'] = 0
+    data['success'][((data['down'] == 1) | (data['down'] == 2)) & (data['Yards.Gained'] >= 4) & (data['InterceptionThrown'] == 0) & (data['Fumble'] = 0)] = 1
+    data['success'][(data['Touchdown'] == 1) & (data['InterceptionThrown'] == 0) & (data['Fumble'] = 0)] = 1
+    data['success'][(data['FirstDown'] == 1) & (data['down'] < 4) & (data['InterceptionThrown'] == 0) & (data['Fumble'] = 0)] = 1
+    data['success'][(data['PlayType'] == 'Field Goal') & (data['FieldGoalResult'] == 'Good')]
 
     data['down'][np.isnan(data['down']) == True] = 0
     data['ScoreDiff'][np.isnan(data['ScoreDiff']) == True] = 0
@@ -187,3 +192,6 @@ def goComplexForest():
     train, test = formatDataComplex(data)
     my_forest = makeComplexForest(train)
     return testForest(test, my_forest)
+
+def makeSuccessForest():
+    pass
