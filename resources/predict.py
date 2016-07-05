@@ -13,12 +13,16 @@ parser.add_argument('yrdline100')
 parser.add_argument('ScoreDiff')
 parser.add_argument('TimeSecs')
 
-class Predict(Resource):
+class PredictComplex(Resource):
     def post(self):
         args = parser.parse_args()
         features = [[args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs']]]
         prediction = predictComplexForest(features)[0]
         return json.dumps(prediction.tolist())
 
-    def get(self):
-        return 'Hello World'
+class PredictSimple(Resource):
+    def post(self):
+        args = parser.parse_args()
+        features = [[args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs']]]
+        prediction = predictSimpleForest(features)[0]
+        return json.dumps(prediction.tolist())

@@ -5,7 +5,8 @@ from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 
 from resources.todo import Todo
-from resources.predict import Predict
+from resources.predict import PredictComplex
+from resources.predict import PredictSimple
 
 import os
 
@@ -23,11 +24,12 @@ from resources.auth import Logout
 CORS(app)
 api = Api(app)
 
-api.add_resource(Todo, '/<todo_id>')
-api.add_resource(Predict, '/')
-api.add_resource(Register, '/register')
-api.add_resource(Login, '/login')
-api.add_resource(Logout, '/logout')
+api.add_resource(Todo, '/api/<todo_id>')
+api.add_resource(PredictComplex, '/api/complex')
+api.add_resource(PredictSimple, '/api/simple')
+api.add_resource(Register, '/api/register')
+api.add_resource(Login, '/api/login')
+api.add_resource(Logout, '/api/logout')
 
 
 if __name__ == '__main__':
