@@ -38,6 +38,6 @@ class Login(Resource):
 
 
 class Logout(Resource):
-    def post(self):
+    def get(self):
         session.pop('logged_in', None)
         return jsonify({'result': 'success'})
