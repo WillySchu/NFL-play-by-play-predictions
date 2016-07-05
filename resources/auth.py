@@ -1,5 +1,6 @@
 from flask_restful import reqparse, Resource
 from flask import jsonify, session
+
 from models import User
 from app import db, bcrypt
 
