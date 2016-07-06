@@ -24,13 +24,13 @@ CORS(app)
 api = Api(app)
 
 api.add_resource(Todo, '/api/<todo_id>')
-api.add_resource(PredictComplex, '/api/complex')
-api.add_resource(PredictSimple, '/api/simple')
+api.add_resource(PredictComplex, '/api/pred/complex')
+api.add_resource(PredictSimple, '/api/pred/simple')
 api.add_resource(Register, '/api/register')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
-api.add_resource(PredictSimpleSuccess, '/api/simplesuccess')
-api.add_resource(PredictComplexSuccess, '/api/complexsuccess')
+api.add_resource(PredictSimpleSuccess, '/api/success/simple')
+api.add_resource(PredictComplexSuccess, '/api/success/complex')
 
 
 if __name__ == '__main__':
