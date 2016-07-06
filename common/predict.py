@@ -99,10 +99,11 @@ def formatDataComplex(data):
     data['passed'][data['PlayType'] == 'QB Kneel'] = 40
 
     data['success'] = 0
-    data['success'][((data['down'] == 1) | (data['down'] == 2)) & (data['Yards.Gained'] >= 4) & (data['InterceptionThrown'] == 0) & (data['Fumble'] = 0)] = 1
-    data['success'][(data['Touchdown'] == 1) & (data['InterceptionThrown'] == 0) & (data['Fumble'] = 0)] = 1
-    data['success'][(data['FirstDown'] == 1) & (data['down'] < 4) & (data['InterceptionThrown'] == 0) & (data['Fumble'] = 0)] = 1
-    data['success'][(data['PlayType'] == 'Field Goal') & (data['FieldGoalResult'] == 'Good')]
+    data['success'][((data['down'] == 1) | (data['down'] == 2)) & (data['Yards.Gained'] >= 4) & (data['InterceptionThrown'] == 0) & (data['Fumble'] == 0)] = 1
+    data['success'][(data['Touchdown'] == 1) & (data['InterceptionThrown'] == 0) & (data['Fumble'] == 0) & (data['PlayType'] != 'Punt')] = 1
+    data['success'][(data['FirstDown'] == 1) & (data['down'] < 4) & (data['InterceptionThrown'] == 0) & (data['Fumble'] == 0)] = 1
+    data['success'][(data['PlayType'] == 'Field Goal') & (data['FieldGoalResult'] == 'Good')] = 1
+    data['success'][(data['down'] == 4) & (data['Yards.Gained'] > data['ydstogo']) & (data['InterceptionThrown'] == 0) & (data['Fumble'] == 0) & ((data['PlayType'] == 'Run') | (data['PlayType'] == 'Pass'))] = 1
 
     data['down'][np.isnan(data['down']) == True] = 0
     data['ScoreDiff'][np.isnan(data['ScoreDiff']) == True] = 0
