@@ -151,19 +151,19 @@ def predictComplexForest(features, forest=None):
 
 def goSimpleForest():
     data = loadData()
-    train, test = formatDataSimple(data)
+    train, test = formatData(data)
     my_forest = makeSimpleForest(train)
-    return testForest(test, my_forest)
+    return testForest(test,'passed', my_forest)
 
 def goComplexForest():
     data = loadData()
-    train, test = formatDataComplex(data)
+    train, test = formatData(data)
     my_forest = makeComplexForest(train)
-    return testForest(test, my_forest)
+    return testForest(test, 'play', my_forest)
 
 def makeSuccessForest(train):
     target = train['success'].values
-    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', 'PlayType']].values
+    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', 'passed']].values
 
     my_forest = RandomForestClassifier(max_depth = 20, min_samples_split=2, n_estimators = 100, random_state = 1)
     my_forest = my_forest.fit(features, target)
@@ -174,5 +174,15 @@ def testSuccessForest(test, forest=None):
     if forest is None:
         forest = joblib.load('data/success_forest.pkl')
     target = test['success'].values
-    features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', 'PlayType']].values
+    features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', 'passed']].values
     return forest.score(features, target)
+
+def goSuccess():
+    train, test = formatData(loadData())
+    my_forest = makeSuccessForest(train)
+    return testSuccessForest(test, my_forest)
+
+def predictSuccessForest(features, forest=None):
+    if forest is None:
+        forest = joblib.load('common/data/success_forest.pkl')
+    return forest.predict_proba(features)
