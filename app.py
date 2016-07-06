@@ -5,8 +5,7 @@ from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 
 from resources.todo import Todo
-from resources.predict import PredictComplex
-from resources.predict import PredictSimple
+from resources.predict import *
 
 import os
 
@@ -30,6 +29,8 @@ api.add_resource(PredictSimple, '/api/simple')
 api.add_resource(Register, '/api/register')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
+api.add_resource(PredictSimpleSuccess, '/api/simplesuccess')
+api.add_resource(PredictComplexSuccess, '/api/complexsuccess')
 
 
 if __name__ == '__main__':

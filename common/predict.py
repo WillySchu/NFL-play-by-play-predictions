@@ -81,54 +81,15 @@ def formatData(data):
 
     return (train, test)
 
-def makeTree(train):
-    target = train['passed'].values
-    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
-
-    my_tree = tree.DecisionTreeClassifier()
-    my_tree = my_tree.fit(features, target)
-
-    joblib.dump(my_tree, 'data/my_tree.pkl')
-
-    return my_tree
-
-def testTree(test, tree=None):
-    if tree is None:
-        tree = joblib.load('data/my_tree.pkl')
-    target = test['passed'].values
-    features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
-    return tree.score(features, target)
-
-def predictTree(features, tree=None):
-    if tree is None:
-        tree = joblib.load('common/data/my_tree.pkl')
-    return tree.predict_proba(features)
-
-def goTree():
-    data = loadData()
-    train, test = formatData(data)
-    my_tree = makeTree(train)
-    return testTree(test, my_tree)
-
-def makeComplexForest(train):
-    target = train['play'].values
+def makeForest(tar, train):
+    target = train[tar].values
     features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
 
     my_forest = RandomForestClassifier(max_depth = 20, min_samples_split=2, n_estimators = 100, random_state = 1)
     my_forest = my_forest.fit(features, target)
 
-    joblib.dump(my_forest, 'data/complex_forest.pkl')
-
-    return my_forest
-
-def makeSimpleForest(train):
-    target = train['passed'].values
-    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
-
-    my_forest = RandomForestClassifier(max_depth = 20, min_samples_split=2, n_estimators = 100, random_state = 1)
-    my_forest = my_forest.fit(features, target)
-
-    joblib.dump(my_forest, 'data/simple_forest.pkl')
+    path = 'data/{0}_forest.pkl'.format(tar)
+    joblib.dump(my_forest, path)
 
     return my_forest
 
@@ -139,50 +100,44 @@ def testForest(test, target, forest=None):
     features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs']].values
     return forest.score(features, target)
 
-def predictSimpleForest(features, forest=None):
-    if forest is None:
-        forest = joblib.load('common/data/simple_forest.pkl')
-    return forest.predict_proba(features)
-
-def predictComplexForest(features, forest=None):
-    if forest is None:
-        forest = joblib.load('common/data/complex_forest.pkl')
-    return forest.predict_proba(features)
-
-def goSimpleForest():
+def goSimple():
     data = loadData()
     train, test = formatData(data)
-    my_forest = makeSimpleForest(train)
+    my_forest = makeForest('passed', train)
     return testForest(test,'passed', my_forest)
 
-def goComplexForest():
+def goComplex():
     data = loadData()
     train, test = formatData(data)
-    my_forest = makeComplexForest(train)
+    my_forest = makeForest('play', train)
     return testForest(test, 'play', my_forest)
 
-def makeSuccessForest(train):
+def makeSuccessForest(feature, train):
     target = train['success'].values
-    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', 'passed']].values
+    features = train[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', feature]].values
 
     my_forest = RandomForestClassifier(max_depth = 20, min_samples_split=2, n_estimators = 100, random_state = 1)
     my_forest = my_forest.fit(features, target)
 
-    joblib.dump(my_forest, 'data/success_forest.pkl')
+    path = 'data/{0}_success_forest.pkl'.format(feature)
+    joblib.dump(my_forest, path)
 
-def testSuccessForest(test, forest=None):
+def testSuccessForest(feature, test, forest=None):
     if forest is None:
-        forest = joblib.load('data/success_forest.pkl')
+        forest = joblib.load('data/' + feature + '_success_forest.pkl')
     target = test['success'].values
-    features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', 'passed']].values
+    features = test[['posteamint', 'down', 'ydstogo', 'yrdline100', 'ScoreDiff', 'TimeSecs', feature]].values
     return forest.score(features, target)
 
-def goSuccess():
+def goSuccess(feature):
     train, test = formatData(loadData())
-    my_forest = makeSuccessForest(train)
-    return testSuccessForest(test, my_forest)
+    my_forest = makeSuccessForest(feature, train)
+    return testSuccessForest(feature, test, my_forest)
 
-def predictSuccessForest(features, forest=None):
+def predict(features, forest_type=None, forest=None):
+    if not (forest_type or forest):
+        raise Exception('forest_type or forest required')
     if forest is None:
-        forest = joblib.load('common/data/success_forest.pkl')
-    return forest.predict_proba(features)
+        path = 'common/data/{0}_forest.pkl'.format(forest_type)
+        forest = joblib.load(path)
+    return forest.predict_proba([features])

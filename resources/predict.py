@@ -1,7 +1,6 @@
 from flask_restful import reqparse, Resource
 
-from common.predict import predictSimpleForest
-from common.predict import predictComplexForest
+from common.predict import predict
 
 import json
 
@@ -16,13 +15,19 @@ parser.add_argument('TimeSecs')
 class PredictComplex(Resource):
     def post(self):
         args = parser.parse_args()
-        features = [[args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs']]]
-        prediction = predictComplexForest(features)[0]
+        features = [args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs']]
+        prediction = predict(features, 'play')[0]
         return json.dumps(prediction.tolist())
 
 class PredictSimple(Resource):
     def post(self):
         args = parser.parse_args()
-        features = [[args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs']]]
-        prediction = predictSimpleForest(features)[0]
+        features = [args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs']]
+        prediction = predict(features, 'passed')[0]
         return json.dumps(prediction.tolist())
+
+class PredictSimpleSuccess(Resource):
+    pass
+
+class PredictComplexSuccess(Resource):
+    pass
