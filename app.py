@@ -29,8 +29,7 @@ api.add_resource(PredictSimple, '/api/pred/simple')
 api.add_resource(Register, '/api/register')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
-api.add_resource(PredictSimpleSuccess, '/api/success/simple')
-api.add_resource(PredictComplexSuccess, '/api/success/complex')
+api.add_resource(PredictSuccess, '/api/success')
 
 
 if __name__ == '__main__':

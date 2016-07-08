@@ -27,16 +27,9 @@ class PredictSimple(Resource):
         prediction = predict(features, 'passed')[0]
         return json.dumps(prediction.tolist())
 
-class PredictSimpleSuccess(Resource):
+class PredictSuccess(Resource):
     def post(self):
         args = parser.parse_args()
         features = [args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs'], args['play']]
         prediction = predict(features, 'passed_success')[0]
-        return json.dumps(prediction.tolist())
-
-class PredictComplexSuccess(Resource):
-    def post(self):
-        args = parser.parse_args()
-        features = [args['posteamint'], args['down'], args['ydstogo'], args['yrdline100'], args['ScoreDiff'], args['TimeSecs'], args['play']]
-        prediction = predict(features, 'play_success')[0]
         return json.dumps(prediction.tolist())
