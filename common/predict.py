@@ -51,7 +51,6 @@ def formatData(data):
 
     data['play'][data['PlayType'] == 'Sack'] = 7
 
-
     data['play'][data['PlayType'] == 'Run'] = 10
     data['play'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'right') & (data['RunGap'] == 'end')] = 11
     data['play'][(data['PlayType'] == 'Run') & (data['RunLocation'] == 'right') & (data['RunGap'] == 'tackle')] = 12
