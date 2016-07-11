@@ -20,10 +20,11 @@ class Register(Resource):
             db.session.add(user)
             db.session.commit()
             status = 'success'
+            return jsonify({'id': user['id'], 'email': user['email']})
         except:
             status = 'this user is already registered'
         db.session.close()
-        return jsonify({'result': status})
+        return jsonify(status)
 
 class Login(Resource):
     def post(self):
@@ -32,13 +33,14 @@ class Login(Resource):
         if user and bcrypt.check_password_hash(
                 user.password, args['password']):
             session['logged_in'] = True
-            status = True
+            userDict = user.__dict__
+            return jsonify({'id': userDict['id'], 'email': userDict['email'], 'favteam': userDict['favteam']});
         else:
             status = False
-        return jsonify({'result': status})
+        return jsonify(status)
 
 
 class Logout(Resource):
     def get(self):
         session.pop('logged_in', None)
-        return jsonify({'result': 'success'})
+        return jsonify('success')

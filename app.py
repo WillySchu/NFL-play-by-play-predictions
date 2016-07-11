@@ -4,7 +4,6 @@ from flask_restful import Api
 from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 
-from resources.todo import Todo
 from resources.predict import *
 
 import os
@@ -23,7 +22,6 @@ from resources.auth import Logout
 CORS(app)
 api = Api(app)
 
-api.add_resource(Todo, '/api/<todo_id>')
 api.add_resource(PredictComplex, '/api/pred/complex')
 api.add_resource(PredictSimple, '/api/pred/simple')
 api.add_resource(Register, '/api/register')
