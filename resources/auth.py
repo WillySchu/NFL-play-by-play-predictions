@@ -52,6 +52,7 @@ class Logout(Resource):
 class Status(Resource):
     def post(self):
         args = parser.parse_args()
+        print(args)
         user = User.verify_auth_token(args['token'])
         return jsonify({'id': user.id, 'email': user.email, 'favteam': user.favteam})
 
