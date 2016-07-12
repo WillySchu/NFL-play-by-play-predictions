@@ -1,5 +1,5 @@
 import datetime
-from app import db, bcrypt
+from app import app, db, bcrypt
 
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)

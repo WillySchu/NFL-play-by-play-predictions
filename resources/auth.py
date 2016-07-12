@@ -20,7 +20,8 @@ class Register(Resource):
             db.session.add(user)
             db.session.commit()
             status = 'success'
-            return jsonify({'id': user['id'], 'email': user['email']})
+            token = user.generate_auth_token()
+            return jsonify({'id': user['id'], 'email': user['email'], 'token': token})
         except:
             status = 'this user is already registered'
         db.session.close()
@@ -34,7 +35,8 @@ class Login(Resource):
                 user.password, args['password']):
             session['logged_in'] = True
             userDict = user.__dict__
-            return jsonify({'id': userDict['id'], 'email': userDict['email'], 'favteam': userDict['favteam']});
+            token = user.generate_auth_token()
+            return jsonify({'id': userDict['id'], 'email': userDict['email'], 'favteam': userDict['favteam'], 'token': token});
         else:
             status = False
         return jsonify(status)
