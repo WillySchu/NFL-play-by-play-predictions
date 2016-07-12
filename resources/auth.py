@@ -8,6 +8,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('email')
 parser.add_argument('password')
 parser.add_argument('token')
+parser.add_argument('team')
 
 class Register(Resource):
     def post(self):
@@ -53,3 +54,11 @@ class Status(Resource):
         args = parser.parse_args()
         user = User.verify_auth_token(args['token'])
         return jsonify({'id': user.id, 'email': user.email, 'favteam': user.favteam})
+
+class UpdateTeam(Resource):
+    def post(self):
+        args = parser.parse_args()
+        user = User.verify_auth_token(args['token'])
+        user.updateTeam(args['team'])
+        db.session.commit()
+        return args['team']

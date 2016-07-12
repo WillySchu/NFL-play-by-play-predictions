@@ -27,6 +27,7 @@ api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
 api.add_resource(PredictSuccess, '/api/success')
 api.add_resource(Status, '/api/status')
+api.add_resource(UpdateTeam, '/api/updateteam')
 
 
 
