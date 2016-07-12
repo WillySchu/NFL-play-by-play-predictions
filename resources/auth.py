@@ -7,6 +7,7 @@ from app import db, bcrypt
 parser = reqparse.RequestParser()
 parser.add_argument('email')
 parser.add_argument('password')
+parser.add_argument('token')
 
 class Register(Resource):
     def post(self):
@@ -46,3 +47,9 @@ class Logout(Resource):
     def get(self):
         session.pop('logged_in', None)
         return jsonify('success')
+
+class Status(Resource):
+    def post(self):
+        args = parser.parse_args()
+        user = User.verify_auth_token(args['token'])
+        return jsonify({'id': user.id, 'email': user.email, 'favteam': user.favteam})

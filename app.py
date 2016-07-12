@@ -15,9 +15,7 @@ db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
-from resources.auth import Register
-from resources.auth import Login
-from resources.auth import Logout
+from resources.auth import *
 
 CORS(app)
 api = Api(app)
@@ -28,6 +26,8 @@ api.add_resource(Register, '/api/register')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
 api.add_resource(PredictSuccess, '/api/success')
+api.add_resource(Status, '/api/status')
+
 
 
 if __name__ == '__main__':
