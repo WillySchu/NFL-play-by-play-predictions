@@ -22,10 +22,10 @@ class Register(Resource):
             db.session.commit()
             status = 'success'
             token = user.generate_auth_token()
-            return jsonify({'id': user['id'], 'email': user['email'], 'token': token})
+            db.session.close()
+            return jsonify({'id': user.id, 'email': user.email, 'token': token})
         except:
-            status = 'this user is already registered'
-        db.session.close()
+            status = False
         return jsonify(status)
 
 class Login(Resource):
