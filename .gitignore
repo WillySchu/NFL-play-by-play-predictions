@@ -3,4 +3,4 @@ nflplaybyplay2015.csv
 test
 .DS_Store
 .env
-app.pyc config.pyc models.pyc
+'*.pyc'
