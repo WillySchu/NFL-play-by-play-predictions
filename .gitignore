@@ -3,4 +3,4 @@ nflplaybyplay2015.csv
 test
 .DS_Store
 .env
-"*.pyc"
+*.pyc
